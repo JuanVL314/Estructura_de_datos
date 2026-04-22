@@ -7,7 +7,7 @@ public class Puerto {
     public static void main(String[] args) {
 
 
-        Contenedor[] manifiesto = new Contenedor[5];
+        Contenedor[] manifiesto = new Contenedor[6];
         double pesoTotal = 0;
 
         System.out.println("=== REGISTRO DE MANIFIESTO ===");
