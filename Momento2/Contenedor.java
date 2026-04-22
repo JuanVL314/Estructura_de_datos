@@ -1,6 +1,6 @@
 public class Contenedor {
 
-    
+    //atributos
     private String id ;
     private double peso ;
     private int prioridad ;
