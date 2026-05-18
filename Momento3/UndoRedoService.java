@@ -2,9 +2,10 @@ import java.util.Stack;
 
 public class UndoRedoService {
 
-    // PILAS OBLIGATORIAS
-    private Stack<String> pilaDeshacer;
-    private Stack<String> pilaRehacer;
+    // PILAS
+    private Stack<Operacion> pilaDeshacer;
+
+    private Stack<Operacion> pilaRehacer;
 
     public UndoRedoService() {
 
@@ -13,46 +14,59 @@ public class UndoRedoService {
         pilaRehacer = new Stack<>();
     }
 
-    // Guardar operación
-    public void guardarOperacion(String operacion) {
+    // GUARDAR OPERACION
+    public void guardarOperacion(
+            Operacion operacion) {
 
         pilaDeshacer.push(operacion);
 
+        // Limpiar rehacer
+        pilaRehacer.clear();
     }
 
-    // Deshacer
+    // DESHACER
     public void deshacer() {
 
         if (pilaDeshacer.isEmpty()) {
 
-            System.out.println("Nada para deshacer");
+            System.out.println(
+                    "Nada para deshacer"
+            );
 
             return;
         }
 
-        String operacion = pilaDeshacer.pop();
+        Operacion operacion =
+                pilaDeshacer.pop();
 
         pilaRehacer.push(operacion);
 
-        System.out.println("Operación deshecha: " + operacion);
-
+        System.out.println(
+                "Operacion deshecha: "
+                        + operacion.getDescripcion()
+        );
     }
 
-    // Rehacer
+    // REHACER
     public void rehacer() {
 
         if (pilaRehacer.isEmpty()) {
 
-            System.out.println("Nada para rehacer");
+            System.out.println(
+                    "Nada para rehacer"
+            );
 
             return;
         }
 
-        String operacion = pilaRehacer.pop();
+        Operacion operacion =
+                pilaRehacer.pop();
 
         pilaDeshacer.push(operacion);
 
-        System.out.println("Operación rehecha: " + operacion);
-
+        System.out.println(
+                "Operacion rehecha: "
+                        + operacion.getDescripcion()
+        );
     }
 }

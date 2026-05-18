@@ -4,27 +4,21 @@ public class Estudiante extends Persona {
 
     private int semestre;
 
-    // MATRIZ NATIVA OBLIGATORIA
     private Double[][] notas;
 
-    // LISTA ENLAZADA
     private LinkedList<String> historialMaterias;
 
     public Estudiante(String nombre, String id, String email, int semestre) {
 
-        // Llama constructor padre
         super(nombre, id, email);
 
         this.semestre = semestre;
 
-        // Creamos matriz 10x20
         notas = new Double[10][20];
 
-        // Lista enlazada
         historialMaterias = new LinkedList<>();
     }
 
-    // Sobrescritura (POLIMORFISMO)
     @Override
     public void mostrarInformacion() {
 
@@ -34,14 +28,11 @@ public class Estudiante extends Persona {
         System.out.println("Semestre: " + semestre);
     }
 
-    // Registrar nota
     public void registrarNota(int semestre, int materia, Double nota) {
 
         notas[semestre][materia] = nota;
-
     }
 
-    // Calcular promedio
     public double calcularPromedio() {
 
         double suma = 0;
@@ -65,18 +56,18 @@ public class Estudiante extends Persona {
 
         return suma / contador;
     }
-
-    // Agregar materia al historial
-    public void agregarMateriaHistorial(String materia) {
+    
+ public void agregarMateriaHistorial(String materia) {
 
         historialMaterias.add(materia);
     }
 
-    public LinkedList<String> getHistorialMaterias() {
-        return historialMaterias;
+    public boolean aproboMateria(String codigo) {
+
+        return historialMaterias.contains(codigo);
     }
 
-    public Double[][] getNotas() {
-        return notas;
+    public LinkedList<String> getHistorialMaterias() {
+        return historialMaterias;
     }
 }

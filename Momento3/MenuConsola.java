@@ -6,104 +6,145 @@ public class MenuConsola {
 
         Scanner sc = new Scanner(System.in);
 
-        // SERVICIOS
         EstudianteService estudianteService = new EstudianteService();
 
         UndoRedoService undoRedoService = new UndoRedoService();
 
         RutaService rutaService = new RutaService();
 
-        // OBJETOS DE PRUEBA
+        ProcesadorCSV procesadorCSV = new ProcesadorCSV();
+
         Aula aula = new Aula("101");
 
-        Materia calculo = new Materia("CALC101", "Calculo I", 3, 4);
+        Materia calculo = new Materia(
+                "CALC101",
+                "Calculo I",
+                3,
+                4);
 
         int opcion;
 
         do {
 
-            System.out.println("\n=================================");
-            System.out.println(" SISTEMA UNIVERSITARIO ");
-            System.out.println("=================================");
+            System.out.println(
+                    "\n===== SISTEMA UNIVERSITARIO =====");
 
-            System.out.println("1. Registrar estudiante");
-            System.out.println("2. Buscar estudiante");
-            System.out.println("3. Listar estudiantes");
-            System.out.println("4. Crear materia");
-            System.out.println("5. Inscribir estudiante");
-            System.out.println("6. Mostrar cola espera");
-            System.out.println("7. Reservar aula");
-            System.out.println("8. Consultar disponibilidad");
-            System.out.println("9. Agregar conexion edificios");
-            System.out.println("10. Calcular rutas");
-            System.out.println("11. Deshacer");
-            System.out.println("12. Rehacer");
-            System.out.println("13. Salir");
+            System.out.println(
+                    "1. Registrar estudiante");
 
-            System.out.print("Seleccione opcion: ");
+            System.out.println(
+                    "2. Buscar estudiante");
+
+            System.out.println(
+                    "3. Listar estudiantes");
+
+            System.out.println(
+                    "4. Inscribir estudiante");
+
+            System.out.println(
+                    "5. Mostrar cola de espera");
+
+            System.out.println(
+                    "6. Reservar aula");
+
+            System.out.println(
+                    "7. Consultar disponibilidad");
+
+            System.out.println(
+                    "8. Ruta mas corta");
+
+            System.out.println(
+                    "9. Procesar CSV");
+
+            System.out.println(
+                    "10. Deshacer");
+
+            System.out.println(
+                    "11. Rehacer");
+
+            System.out.println(
+                    "12. Salir");
+
+            System.out.print(
+                    "Seleccione opcion: ");
 
             opcion = sc.nextInt();
+
             sc.nextLine();
 
             switch (opcion) {
 
-                // =====================================
+                // ==========================
                 // REGISTRAR ESTUDIANTE
-                // =====================================
+                // ==========================
 
                 case 1:
 
-                    System.out.println("\n--- REGISTRO ---");
-
                     System.out.print("ID: ");
+
                     String id = sc.nextLine();
 
                     System.out.print("Nombre: ");
+
                     String nombre = sc.nextLine();
 
                     System.out.print("Email: ");
+
                     String email = sc.nextLine();
 
                     System.out.print("Semestre: ");
+
                     int semestre = sc.nextInt();
 
-                    Estudiante estudiante = new Estudiante(nombre, id, email, semestre);
+                    Estudiante estudiante = new Estudiante(
+                            nombre,
+                            id,
+                            email,
+                            semestre);
 
-                    estudianteService.registrar(estudiante);
+                    estudianteService
+                            .registrar(estudiante);
 
-                    System.out.println("Estudiante registrado");
+                    undoRedoService
+                            .guardarOperacion(
+                                    new Operacion(
+                                            "Registro estudiante"));
 
-                    undoRedoService.guardarOperacion("Registro estudiante " + nombre);
+                    System.out.println(
+                            "Estudiante registrado");
 
                     break;
 
-                // =====================================
+                // ==========================
                 // BUSCAR ESTUDIANTE
-                // =====================================
+                // ==========================
 
                 case 2:
 
-                    System.out.print("Ingrese ID: ");
+                    System.out.print(
+                            "Ingrese ID: ");
 
                     String buscarId = sc.nextLine();
 
-                    Estudiante encontrado = estudianteService.buscar(buscarId);
+                    Estudiante encontrado = estudianteService
+                            .buscar(buscarId);
 
                     if (encontrado != null) {
 
-                        encontrado.mostrarInformacion();
+                        encontrado
+                                .mostrarInformacion();
 
                     } else {
 
-                        System.out.println("Estudiante no encontrado");
-
+                        System.out.println(
+                                "No encontrado");
                     }
 
                     break;
 
-                // =====================================
+                // ==========================
                 // LISTAR
-                // =====================================
+                // ==========================
 
                 case 3:
 
@@ -111,189 +152,190 @@ public class MenuConsola {
 
                     break;
 
-                // =====================================
-                // CREAR MATERIA
-                // =====================================
+                // ==========================
+                // INSCRIBIR
+                // ==========================
 
                 case 4:
 
-                    System.out.println("Materia creada: CALC101");
-
-                    calculo.agregarPreRequisito("MAT001");
-
-                    break;
-
-                // =====================================
-                // INSCRIBIR
-                // =====================================
-
-                case 5:
-
-                    System.out.print("ID estudiante: ");
+                    System.out.print(
+                            "ID estudiante: ");
 
                     String idInscripcion = sc.nextLine();
 
-                    Estudiante estudianteInscripcion = estudianteService.buscar(idInscripcion);
+                    Estudiante estudianteInscripcion = estudianteService
+                            .buscar(idInscripcion);
 
                     if (estudianteInscripcion != null) {
 
-                        calculo.inscribir(estudianteInscripcion);
-
-                        undoRedoService.guardarOperacion("Inscripcion " + estudianteInscripcion.getNombre());
+                        calculo.inscribir(
+                                estudianteInscripcion);
 
                     } else {
 
-                        System.out.println("No encontrado");
+                        System.out.println(
+                                "No encontrado");
                     }
 
                     break;
 
-                // =====================================
-                // COLA ESPERA
-                // =====================================
+                // ==========================
+                // COLA DE ESPERA
+                // ==========================
 
-                case 6:
+                case 5:
 
-                    System.out.println("--- COLA ESPERA ---");
+                    System.out.println(
+                            "\n=== COLA DE ESPERA ===");
 
                     for (Estudiante e : calculo.getColaEspera()) {
 
-                        System.out.println(e.getNombre());
-
+                        System.out.println(
+                                e.getNombre());
                     }
 
                     break;
 
-                // =====================================
+                // ==========================
                 // RESERVAR AULA
-                // =====================================
+                // ==========================
 
-                case 7:
+                case 6:
 
                     try {
 
-                        System.out.print("Dia: ");
+                        System.out.print(
+                                "Dia: ");
+
                         int dia = sc.nextInt();
 
-                        System.out.print("Hora: ");
+                        System.out.print(
+                                "Hora: ");
+
                         int hora = sc.nextInt();
 
-                        System.out.print("Duracion: ");
+                        System.out.print(
+                                "Duracion: ");
+
                         int duracion = sc.nextInt();
 
-                        aula.reservar (dia, hora, duracion);
-
-                        undoRedoService.guardarOperacion("Reserva aula");
+                        aula.reservar(
+                                dia,
+                                hora,
+                                duracion);
 
                     } catch (Exception e) {
 
-                        System.out.println(e.getMessage());
-
+                        System.out.println(
+                                e.getMessage());
                     }
 
                     break;
 
-                // =====================================
+                // ==========================
                 // CONSULTAR DISPONIBILIDAD
-                // =====================================
+                // ==========================
 
-                case 8:
+                case 7:
 
-                    System.out.print("Dia: ");
+                    System.out.print(
+                            "Dia: ");
+
                     int diaConsulta = sc.nextInt();
 
-                    System.out.print("Hora: ");
+                    System.out.print(
+                            "Hora: ");
+
                     int horaConsulta = sc.nextInt();
 
-                    boolean disponible = aula.consultarDisponibilidad(diaConsulta, horaConsulta);
+                    boolean disponible = aula.consultarDisponibilidad(
+                            diaConsulta,
+                            horaConsulta);
 
                     if (disponible) {
 
-                        System.out.println("Horario libre");
+                        System.out.println(
+                                "Horario libre");
 
                     } else {
 
-                        System.out.println("Horario ocupado");
-
+                        System.out.println(
+                                "Horario ocupado");
                     }
 
                     break;
 
-                // =====================================
-                // AGREGAR CONEXION
-                // =====================================
+                // ==========================
+                // RUTA MAS CORTA
+                // ==========================
+
+                case 8:
+
+                    rutaService.agregarConexion(
+                            0,
+                            2,
+                            150);
+
+                    rutaService.agregarConexion(
+                            2,
+                            3,
+                            180);
+
+                    rutaService.dijkstra(0);
+
+                    break;
+
+                // ==========================
+                // PROCESAR CSV
+                // ==========================
 
                 case 9:
 
-                    System.out.print("Origen: ");
-
-                    int origen = sc.nextInt();
-
-                    System.out.print("Destino: ");
-
-                    int destino = sc.nextInt();
-
-                    System.out.print("Distancia: ");
-
-                    int distancia = sc.nextInt();
-
-                    rutaService.agregarConexion(origen, destino, distancia);
-
-                    System.out.println("Conexion agregada");
+                    procesadorCSV.procesar(
+                            "data/inscripciones.csv",
+                            estudianteService,
+                            calculo);
 
                     break;
 
-                // =====================================
-                // DIJKSTRA
-                // =====================================
+                // ==========================
+                // DESHACER
+                // ==========================
 
                 case 10:
-
-                    System.out.print("Origen: ");
-
-                    int inicio = sc.nextInt();
-
-                    rutaService.dijkstra(inicio);
-
-                    break;
-
-                // =====================================
-                // DESHACER
-                // =====================================
-
-                case 11:
 
                     undoRedoService.deshacer();
 
                     break;
 
-                // =====================================
+                // ==========================
                 // REHACER
-                // =====================================
+                // ==========================
 
-                case 12:
+                case 11:
 
                     undoRedoService.rehacer();
 
                     break;
 
-                // =====================================
+                // ==========================
                 // SALIR
-                // =====================================
+                // ==========================
 
-                case 13:
+                case 12:
 
-                    System.out.println("Saliendo...");
+                    System.out.println(
+                            "Saliendo...");
 
                     break;
 
                 default:
 
-                    System.out.println("Opcion invalida");
-
+                    System.out.println(
+                            "Opcion invalida");
             }
 
-        } while (opcion != 13);
+        } while (opcion != 12);
 
         sc.close();
     }
