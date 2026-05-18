@@ -1,9 +1,7 @@
-
 public class Aula {
 
     private String nombre;
 
-    // MATRIZ OBLIGATORIA
     private boolean[][] horarios;
 
     public Aula(String nombre) {
@@ -13,39 +11,50 @@ public class Aula {
         horarios = new boolean[7][24];
     }
 
-    // Reservar horario
-    public void reservar(int dia, int hora, int duracion) throws HorarioConflictivoException {
+    public void reservar(
+            int dia,
+            int hora,
+            int duracion)
+            throws Exception {
 
-        // Verificar disponibilidad
-        for (int i = hora; i < hora + duracion; i++) {
+        if (dia < 0 || dia > 6) {
+
+            throw new Exception(
+                    "Dia invalido");
+        }
+
+        if (hora < 0 ||
+                hora + duracion > 24) {
+
+            throw new Exception(
+                    "Hora invalida");
+        }
+
+        for (int i = hora;
+             i < hora + duracion;
+             i++) {
 
             if (horarios[dia][i]) {
 
-                throw new HorarioConflictivoException("Horario ocupado");
-
+                throw new Exception(
+                        "Horario ocupado");
             }
         }
 
-        // Reservar
-        for (int i = hora; i < hora + duracion; i++) {
+        for (int i = hora;
+             i < hora + duracion;
+             i++) {
 
             horarios[dia][i] = true;
         }
 
-        System.out.println("Reserva exitosa");
+        System.out.println(
+                "Reserva exitosa");
     }
 
-    // Liberar horario
-    public void liberar(int dia, int hora, int duracion) {
-
-        for (int i = hora; i < hora + duracion; i++) {
-
-            horarios[dia][i] = false;
-        }
-    }
-
-    // Consultar disponibilidad
-    public boolean consultarDisponibilidad( int dia, int hora) {
+    public boolean consultarDisponibilidad(
+            int dia,
+            int hora) {
 
         return !horarios[dia][hora];
     }

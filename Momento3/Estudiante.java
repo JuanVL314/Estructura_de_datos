@@ -8,7 +8,11 @@ public class Estudiante extends Persona {
 
     private LinkedList<String> historialMaterias;
 
-    public Estudiante(String nombre, String id, String email, int semestre) {
+    public Estudiante(
+            String nombre,
+            String id,
+            String email,
+            int semestre) {
 
         super(nombre, id, email);
 
@@ -28,7 +32,10 @@ public class Estudiante extends Persona {
         System.out.println("Semestre: " + semestre);
     }
 
-    public void registrarNota(int semestre, int materia, Double nota) {
+    public void registrarNota(
+            int semestre,
+            int materia,
+            Double nota) {
 
         notas[semestre][materia] = nota;
     }
@@ -36,6 +43,7 @@ public class Estudiante extends Persona {
     public double calcularPromedio() {
 
         double suma = 0;
+
         int contador = 0;
 
         for (int i = 0; i < 10; i++) {
@@ -45,29 +53,29 @@ public class Estudiante extends Persona {
                 if (notas[i][j] != null) {
 
                     suma += notas[i][j];
+
                     contador++;
                 }
             }
         }
 
         if (contador == 0) {
+
             return 0;
         }
 
         return suma / contador;
     }
-    
- public void agregarMateriaHistorial(String materia) {
+
+    public void agregarMateriaHistorial(
+            String materia) {
 
         historialMaterias.add(materia);
     }
 
-    public boolean aproboMateria(String codigo) {
+    public boolean aproboMateria(
+            String codigo) {
 
         return historialMaterias.contains(codigo);
-    }
-
-    public LinkedList<String> getHistorialMaterias() {
-        return historialMaterias;
     }
 }

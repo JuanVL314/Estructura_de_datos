@@ -5,22 +5,31 @@ import java.util.ArrayDeque;
 public class Materia {
 
     private String codigo;
+
     private String nombre;
+
     private int cuposMaximos;
+
     private int inscritos;
+
     private int creditos;
 
-    // LISTA ENLAZADA
     private LinkedList<String> prerequisitos;
 
-    // COLA
     private Queue<Estudiante> colaEspera;
 
-    public Materia(String codigo, String nombre, int cuposMaximos, int creditos) {
+    public Materia(
+            String codigo,
+            String nombre,
+            int cuposMaximos,
+            int creditos) {
 
         this.codigo = codigo;
+
         this.nombre = nombre;
+
         this.cuposMaximos = cuposMaximos;
+
         this.creditos = creditos;
 
         inscritos = 0;
@@ -28,66 +37,74 @@ public class Materia {
         prerequisitos = new LinkedList<>();
 
         colaEspera = new ArrayDeque<>();
-
     }
 
-    // Agregar prerequisito
-    public void agregarPreRequisito(String materia) {
+    public void agregarPreRequisito(
+            String materia) {
 
         prerequisitos.add(materia);
-
     }
 
-    // Verificar cupos
+    public boolean validarPreRequisitos(
+            Estudiante estudiante) {
+
+        for (String requisito :
+                prerequisitos) {
+
+            if (!estudiante.aproboMateria(
+                    requisito)) {
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public boolean hayCupos() {
 
         return inscritos < cuposMaximos;
-
     }
 
-    // Inscribir estudiante
-    public void inscribir(Estudiante estudiante) {
+    public void inscribir(
+            Estudiante estudiante) {
+
+        if (!validarPreRequisitos(
+                estudiante)) {
+
+            System.out.println(
+                    "No cumple prerequisitos");
+
+            return;
+        }
 
         if (hayCupos()) {
 
             inscritos++;
 
-            System.out.println(estudiante.getNombre() + " inscrito correctamente");
+            estudiante.agregarMateriaHistorial(
+                    codigo);
+
+            System.out.println(
+                    estudiante.getNombre()
+                            + " inscrito correctamente");
 
         } else {
 
             colaEspera.offer(estudiante);
 
-            System.out.println("Materia llena. " + estudiante.getNombre() + " agregado a cola");
-        }
-    }
-
-    // Liberar cupo
-    public void liberarCupo() {
-
-        inscritos--;
-
-        // Si hay estudiantes esperando
-        if (!colaEspera.isEmpty()) {
-
-            Estudiante siguiente = colaEspera.poll();
-
-            inscritos++;
-
-            System.out.println("Cupo asignado a " + siguiente.getNombre());
-
+            System.out.println(
+                    "Materia llena. Agregado a cola");
         }
     }
 
     public Queue<Estudiante> getColaEspera() {
+
         return colaEspera;
     }
 
-    public LinkedList<String> getPrerequisitos() {
-        return prerequisitos;
-    }
-
     public String getCodigo() {
+
         return codigo;
     }
 }

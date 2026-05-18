@@ -14,10 +14,7 @@ public abstract class Persona {
         this.email = email;
     }
 
-    // Metodo abstracto
     public abstract void mostrarInformacion();
-
-    // Getters
 
     public String getNombre() {
 
