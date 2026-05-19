@@ -455,19 +455,13 @@ public class MenuConsola {
 
                                 case 21:
 
-                                        java.io.File archivo = new java.io.File(
-                                                        "./Datos/inscripciones.csv");
+                                        java.io.File archivo = new java.io.File( "./Datos/inscripciones.csv");
 
-                                        System.out.println(
-                                                        archivo.getAbsolutePath());
+                                        System.out.println( archivo.getAbsolutePath());
 
-                                        System.out.println(
-                                                        archivo.exists());
+                                        System.out.println( archivo.exists());
 
-                                        procesadorCSV.procesar(
-                                                        "./Datos/inscripciones.csv",
-                                                        estudianteService,
-                                                        calculo);
+                                        procesadorCSV.procesar( "./Datos/inscripciones.csv", estudianteService, calculo);
 
                                         break;
 
